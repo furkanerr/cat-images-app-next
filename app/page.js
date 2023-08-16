@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import checkIfLogin from "@/libs/checkIfLoggedIn";
-
+import { useGlobalContext } from './context/store';
 export default function Home() {
+  const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
   const router = useRouter();
   const [error, setError] = useState(null);
   const validationSchema = Yup.object({
@@ -37,6 +38,7 @@ export default function Home() {
         const result = await axios.post("/api/login", req);
       
         if (result.status === 200) {
+          setIsLoggedIn(true)
           router.push("/cats");
         }
       } catch (error) {
@@ -48,8 +50,8 @@ export default function Home() {
  
   const checkSession  = async () =>{
 
-    const response = await checkIfLogin()
-    if (response.status === true) {
+   // const response = await checkIfLogin()
+    if (isLoggedIn) {
       router.push("/cats");
     }
    

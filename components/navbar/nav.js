@@ -4,11 +4,13 @@ import style from "./style.module.scss";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
 import checkIfLogin from "@/libs/checkIfLoggedIn";
+import { useGlobalContext } from '../../app/context/store';
 const Nav = () => {
+    const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
   const router = useRouter();
   const pathname = usePathname();
     const [loading,setLoading] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const checkSession = async () => {
     setLoading(true)
     const response = await checkIfLogin();

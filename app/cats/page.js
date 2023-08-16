@@ -7,11 +7,12 @@ import Image from "next/image";
 import checkIfLogin  from '@/libs/checkIfLoggedIn';
 import "react-loading-skeleton/dist/skeleton.css";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from '../context/store';
 function ImageComponent() {
   const [imageSrc, setImageSrc] = useState("");
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-
+  const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
   const fetchRandomImage = async () => {
     try {
       setLoading(true);
@@ -33,8 +34,8 @@ function ImageComponent() {
 
   const checkSession  = async () =>{
 
-    const response = await checkIfLogin()
-    if (response == true) {
+    //const response = await checkIfLogin()
+    if (isLoggedIn) {
       return true;
     }
     else{
