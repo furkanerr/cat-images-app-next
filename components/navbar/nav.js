@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react'
 import style from './style.module.scss'
 import axios from 'axios'
