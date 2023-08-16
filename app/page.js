@@ -3,12 +3,13 @@
 import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import checkIfLogin from "@/libs/checkIfLoggedIn";
 import { useGlobalContext } from './context/store';
 export default function Home() {
+  const pathname = usePathname();
   const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
   const router = useRouter();
   const [error, setError] = useState(null);
@@ -51,6 +52,7 @@ export default function Home() {
   const checkSession  = async () =>{
 
    // const response = await checkIfLogin()
+
     if (isLoggedIn) {
       router.push("/cats");
     }
@@ -60,7 +62,7 @@ export default function Home() {
 
   useEffect(() => {
     checkSession();
-  }, []);
+  }, [pathname]);
 
   return (
     <div className={styles.container}>

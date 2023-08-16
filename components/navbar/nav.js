@@ -4,18 +4,18 @@ import style from "./style.module.scss";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
 import checkIfLogin from "@/libs/checkIfLoggedIn";
-import { useGlobalContext } from '../../app/context/store';
+import { useGlobalContext } from "../../app/context/store";
 const Nav = () => {
-    const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
+  const { setIsLoggedIn, isLoggedIn } = useGlobalContext();
   const router = useRouter();
   const pathname = usePathname();
-    const [loading,setLoading] = useState(false)
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(false);
+  //   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const checkSession = async () => {
-    setLoading(true)
+    setLoading(true);
     const response = await checkIfLogin();
     setIsLoggedIn(response);
-    setLoading(false)
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -25,22 +25,27 @@ const Nav = () => {
   const handleLogout = async () => {
     const response = await axios.get("/api/logout");
     if (response.status == 200) {
-        setIsLoggedIn(false);
+      setIsLoggedIn(false);
       router.push("/");
     }
   };
   const handleLogIn = () => {
     router.push("/");
   };
+  useEffect(()=>{
+    if (isLoggedIn) {
+        router.push("/cats");
+      }
+  },[isLoggedIn])
   return (
     <div className={style.navbar}>
       <div className={style.name}>Cat App</div>
-      {!loading &&isLoggedIn == true && (
+      {!loading && isLoggedIn == true && (
         <button className={style.Logoutbutton} onClick={() => handleLogout()}>
           LogOut
         </button>
       )}
-      {!loading &&isLoggedIn == false && (
+      {!loading && isLoggedIn == false && (
         <button className={style.Loginbutton} onClick={() => handleLogIn()}>
           Login
         </button>
