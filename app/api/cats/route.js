@@ -1,8 +1,8 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function GET(request,response) {
-  response.setHeader('Cache-Control', 'public, s-maxage=1')
+export async function GET() {
+  
   try {
     const response = await axios.get(
       "https://api.thecatapi.com/v1/images/search",
@@ -13,7 +13,7 @@ export async function GET(request,response) {
         },
       }
     );
-
+   
     return NextResponse.json({
       data: response.data,
     });
