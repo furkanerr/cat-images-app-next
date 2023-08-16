@@ -62,7 +62,7 @@ export default function Home() {
 
   useEffect(() => {
     checkSession();
-  }, [pathname]);
+  }, [pathname,isLoggedIn]);
 
   return (
     <div className={styles.container}>
