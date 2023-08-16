@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style.module.scss"; // Import your SCSS module
@@ -14,14 +14,14 @@ function ImageComponent() {
   const fetchRandomImage = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/cats",{
-        headers:{
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-        }
+      const response = await axios.get("/api/cats", {
+        headers: {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+        },
       });
 
       const imageUrl = response.data.data[0]?.url || "";
-      console.log(imageUrl)
+      console.log(imageUrl);
       setImageSrc(imageUrl);
     } catch (error) {
       console.error("Error fetching image:", error);
@@ -53,7 +53,6 @@ function ImageComponent() {
           <div className={styles.Skeleton}>
             <Skeleton width={300} height={60} count={5} />
           </div>
-          
         ) : (
           <div className={styles.image}>
             <img width={300} height={300} src={imageSrc} alt="Random Cat" />

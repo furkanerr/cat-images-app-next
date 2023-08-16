@@ -16,7 +16,7 @@ const Nav = () => {
   }
   useEffect(()=>{
     checkIfLogin()
-  },[])
+  },[router])
 
   const handleLogout = async()=>{
     const response = await axios.get("/api/logout")
