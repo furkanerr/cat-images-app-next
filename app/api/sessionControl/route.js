@@ -21,7 +21,7 @@ export async function GET() {
 
   const { value } = token;
 
-  // Always check this
+ 
   const key = process.env.KEY;
 
   try {

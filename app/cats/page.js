@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./style.module.scss"; // Import your SCSS module
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
+import checkIfLogin  from '@/libs/checkIfLoggedIn';
 import "react-loading-skeleton/dist/skeleton.css";
 import { useRouter } from "next/navigation";
 function ImageComponent() {
@@ -21,29 +22,32 @@ function ImageComponent() {
       });
 
       const imageUrl = response.data.data[0]?.url || "";
-      console.log(imageUrl);
+      
       setImageSrc(imageUrl);
     } catch (error) {
-      console.error("Error fetching image:", error);
+      
     } finally {
       setLoading(false);
     }
   };
-  const checkIfLogin = async () => {
-    try {
-      const response = await axios.get("/api/sessionControl");
-      console.log("response", response);
-      if (response.status == 200) {
-        return true;
-      }
-    } catch (error) {
-      console.log(error);
+
+  const checkSession  = async () =>{
+
+    const response = await checkIfLogin()
+    if (response == true) {
+      return true;
+    }
+    else{
       router.push("/");
     }
-  };
+
+}
   useEffect(() => {
-    checkIfLogin();
-    fetchRandomImage();
+    const result = checkSession();
+    if(result){
+      fetchRandomImage();
+    }
+  
   }, []);
 
   return (
